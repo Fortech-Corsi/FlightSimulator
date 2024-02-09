@@ -4,10 +4,12 @@ namespace CompanyService;
 
 public class Flotta
 {
+    public long IdFLotta { get; set; }
     public List<Aereo> Aerei { get; set; }
 
-    public Flotta(List<Aereo> aerei)
+    public Flotta(long idFLotta, List<Aereo> aerei)
     {
+        IdFLotta = idFLotta;
         Aerei = aerei;
     }
 
