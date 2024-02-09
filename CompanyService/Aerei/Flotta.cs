@@ -11,7 +11,7 @@ public class Flotta
         Aerei = aerei;
     }
 
-    public Aereo? GetAereoById(int idAereo)
+    public Aereo? GetAereoById(long idAereo)
     {
         foreach (var aereo in Aerei)
         {

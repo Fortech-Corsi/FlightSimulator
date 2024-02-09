@@ -8,9 +8,9 @@ public class FlottaTests
     public void VerificareCheDatoUnidRitorniUnsoloAereo(){
         
         // ARRANGE
-        var aereo1 = new Aereo(1, "ABCDEF1");
-        var aereo2 = new Aereo(2, "ABCDEF2");
-        var aereo3 = new Aereo(3, "ABCDEF3");
+        var aereo1 = new Aereo(1, "ABCDEF1", "Rosso", 120);
+        var aereo2 = new Aereo(2, "ABCDEF2", "Rosso", 120);
+        var aereo3 = new Aereo(3, "ABCDEF3", "Rosso", 120);
 
         List<Aereo> lista = new List<Aereo>();
         lista.Add(aereo1);
@@ -33,9 +33,9 @@ public class FlottaTests
         
           
         // ARRANGE
-        var aereo1 = new Aereo(1, "ABCDEF1");
-        var aereo2 = new Aereo(2, "ABCDEF2");
-        var aereo3 = new Aereo(3, "ABCDEF3");
+        var aereo1 = new Aereo(1, "ABCDEF1", "Rosso", 120);
+        var aereo2 = new Aereo(2, "ABCDEF2", "Rosso", 120);
+        var aereo3 = new Aereo(3, "ABCDEF3", "Rosso", 120);
 
         List<Aereo> lista = new List<Aereo>();
         lista.Add(aereo1);
