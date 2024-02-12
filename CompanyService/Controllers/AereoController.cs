@@ -31,7 +31,7 @@ public class AereoController : ControllerBase
         var result = new AereoApi(aereo.IdAereo, aereo.CodiceAereo,
         aereo.Colore, aereo.NumeroDiPosti);
 
-        return Ok(result);
+        return NotFound(result);
     }
 
 
