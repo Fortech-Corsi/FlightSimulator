@@ -28,7 +28,6 @@ public static class FakeDatabase
 
     public static Aereo? GetAereoDaIdAereo(long idAereo)
     {
-
         foreach (var flotta in Flotte)
         {
             foreach (var aereo in flotta.Aerei)
@@ -87,4 +86,15 @@ public static class FakeDatabase
 
         flottaSelezionata.Aerei.Remove(aereoSelezionato);
     }
+
+    public static Aereo? UpdateAereoByIdAereo(long idAereo, string codiceAereo, string colore, long numeroDiPosti)
+    {
+        var aereo = GetAereoDaIdAereo(idAereo);
+        if(aereo != null){
+             aereo.UpdateInformazioniAereo(codiceAereo, colore, numeroDiPosti);
+        }
+       
+        return aereo;
+    }
+
 }

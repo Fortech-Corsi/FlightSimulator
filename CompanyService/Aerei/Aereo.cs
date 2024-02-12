@@ -1,4 +1,5 @@
-﻿namespace CompanyService;
+﻿
+namespace CompanyService;
 
 public class Aereo
 {
@@ -23,4 +24,12 @@ public class Aereo
      public static Aereo AereoFakeDBCreateFactory(long idAereo, string codiceAereo, string colore, long numeroDiPosti){
         return new Aereo(idAereo, codiceAereo, colore, numeroDiPosti);
     }
+
+    public void UpdateInformazioniAereo(string codiceAereo, string colore, long numeroDiPosti)
+    {
+        this.CodiceAereo = codiceAereo;
+        this.Colore = colore;
+        this.NumeroDiPosti = numeroDiPosti;
+    }
+
 }

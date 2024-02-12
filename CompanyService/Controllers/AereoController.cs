@@ -77,6 +77,20 @@ public class AereoController : ControllerBase
     [ProducesResponseType(typeof(AereoApi), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> Put(UpdateAereoRequest request)
     {
-        return BadRequest("Not implemented");
+         // Recupero le informazioni dal db     
+        var aereo = FakeDatabase.GetAereoDaIdAereo(request.IdAereo);
+        if (aereo == null)
+        {
+            return NotFound();
+        }
+
+        var aereoBl = FakeDatabase.UpdateAereoByIdAereo(request.IdAereo, request.CodiceAereo, request.Colore, request.NumeroDiPosti);
+
+         // Converto il modello di bl in quello api
+        var aereoApi = new AereoApi(aereoBl.IdAereo, aereoBl.CodiceAereo, aereoBl.Colore, aereoBl.NumeroDiPosti);
+
+        // Restituisco il modello api
+        return Ok(aereoApi);
+
     }
 }
