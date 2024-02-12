@@ -67,4 +67,24 @@ public static class FakeDatabase
         return aereoBl;
     }
 
+    public static void DeleteAereoDaIdAereo(long idAereo)
+    {
+        Flotta flottaSelezionata = null;
+        Aereo aereoSelezionato = null;
+
+        foreach (var flotta in Flotte)
+        {
+            foreach (var aereo in flotta.Aerei)
+            {
+                if (aereo.IdAereo == idAereo)
+                {
+                    flottaSelezionata = flotta;
+                    aereoSelezionato = aereo;
+                    break;
+                }
+            }
+        }
+
+        flottaSelezionata.Aerei.Remove(aereoSelezionato);
+    }
 }

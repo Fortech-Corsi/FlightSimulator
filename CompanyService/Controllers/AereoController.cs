@@ -56,4 +56,27 @@ public class AereoController : ControllerBase
         // Restituisco il modello api
         return Ok(aereoApi);
     }
+
+    [HttpDelete()]
+    [ProducesResponseType(typeof(long), (int)HttpStatusCode.NotFound)]
+    [ProducesResponseType(typeof(AereoApi), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> Delete(long idAereo)
+    {
+         // Recupero le informazioni dal db     
+        var aereo = FakeDatabase.GetAereoDaIdAereo(idAereo);
+        if (aereo == null)
+        {
+            return NotFound();
+        }
+        FakeDatabase.DeleteAereoDaIdAereo(idAereo);
+        return Ok();
+    }
+
+    [HttpPut()]
+    [ProducesResponseType(typeof(long), (int)HttpStatusCode.NotFound)]
+    [ProducesResponseType(typeof(AereoApi), (int)HttpStatusCode.OK)]
+    public async Task<IActionResult> Put(UpdateAereoRequest request)
+    {
+        return BadRequest("Not implemented");
+    }
 }
