@@ -1,15 +1,15 @@
 namespace CompanyService;
 
-public class CreateAereoRequest
+public class UpdateAereoRequest
 {
-    public long IdFLotta {get; set;}
+    public long IdAereo {get; set;}
     public string CodiceAereo { get; set; }
     public string Colore { get; set; }
     public long NumeroDiPosti { get; set; }
     
-    public CreateAereoRequest(long idFLotta, string codiceAereo, string colore, long numeroDiPosti)
+    public UpdateAereoRequest(long idAereo, string codiceAereo, string colore, long numeroDiPosti)
     {        
-        IdFLotta = idFLotta;
+        IdAereo = idAereo;
         CodiceAereo = codiceAereo;
         Colore = colore;
         NumeroDiPosti = numeroDiPosti;
