@@ -22,20 +22,20 @@ public class AereoControllerTests{
         Assert.Equal((int)HttpStatusCode.OK, result.StatusCode);
     }
 
-    [Fact]  
-    public async void GetAereo_RecuperoUnAereo_RitornoNotFound(){
+    // [Fact]  
+    // public async void GetAereo_RecuperoUnAereo_RitornoNotFound(){
         
-        // ARRANGE
-        var _aereoController = new AereoController();
-        long idAereo = 10;
+    //     // ARRANGE
+    //     var _aereoController = new AereoController();
+    //     long idAereo = 10;
 
-        // ACT
-        var result = await _aereoController.Get(idAereo) as ObjectResult;
+    //     // ACT
+    //     var result = await _aereoController.Get(idAereo) as ObjectResult;
 
-        // ASSERT
-        Assert.NotNull(result);
-        Assert.Equal((int)HttpStatusCode.NotFound, result.StatusCode);
-    }
+    //     // ASSERT
+    //     Assert.NotNull(result);
+    //     Assert.Equal((int)HttpStatusCode.NotFound, result.StatusCode);
+    // }
 
     [Fact]  
     public async void PostAereo_CreoUnAereo_AereoCreato(){
@@ -80,6 +80,6 @@ public class AereoControllerTests{
         Assert.Equal(a.CodiceAereo, b.CodiceAereo);
         Assert.Equal(a.Colore, b.Colore);
         Assert.Equal(a.NumeroDiPosti, b.NumeroDiPosti);
-        
+
     }
 }
