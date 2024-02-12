@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using CompanyService;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AirRouteAdministrator.API;
@@ -20,9 +21,16 @@ public class AereoController : ControllerBase
     public async Task<IActionResult> Get(long idAereo)
     {
         // Recupero le informazioni dal db     
-       
+        var aereo = FakeDatabase.GetAereoDaIdAereo(idAereo);
+        if (aereo == null)
+        {
+            return NotFound();
+        }
 
-        var result = new AereoApi(1, "Codice 1", "Bianco", 10);
+        // convertiamo nel modello del contratto
+        var result = new AereoApi(aereo.IdAereo, aereo.CodiceAereo,
+        aereo.Colore, aereo.NumeroDiPosti);
+
         return Ok(result);
     }
 
@@ -32,8 +40,15 @@ public class AereoController : ControllerBase
     [ProducesResponseType(typeof(AereoApi), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> Post(CreateAereoRequest request)
     {
-        // Creo il modello di bl dell'aereo a partire dalla request
-        var aereoBl = Aereo.AereoCreateFactory(request.CodiceAereo, request.Colore, request.NumeroDiPosti);
+        // Verifichiamo l'esistenza della flotta
+        var flotta = FakeDatabase.GetFlottaByIdFlotta(request.IdFLotta);
+        if (flotta == null)
+        {
+            return BadRequest("No ho trovato la flotta");
+        }
+
+        // Inserimento nel database
+        var aereoBl = FakeDatabase.AddAereoAFlotta(request.IdFLotta, request.CodiceAereo, request.Colore, request.NumeroDiPosti);
 
         // Converto il modello di bl in quello api
         var aereoApi = new AereoApi(aereoBl.IdAereo, aereoBl.CodiceAereo, aereoBl.Colore, aereoBl.NumeroDiPosti);

@@ -3,6 +3,7 @@ using CompanyService;
 public static class FakeDatabase
 {
     public static List<Flotta> Flotte { get; set; }
+    public static long IdAereoKey { get; set; }
 
     static FakeDatabase()
     {
@@ -21,5 +22,49 @@ public static class FakeDatabase
         Flotta f3 = new Flotta(10002, [aereo7, aereo8]);
 
         Flotte = new List<Flotta>() { f1, f2, f3 };
+
+        IdAereoKey = 10;
     }
+
+    public static Aereo? GetAereoDaIdAereo(long idAereo)
+    {
+
+        foreach (var flotta in Flotte)
+        {
+            foreach (var aereo in flotta.Aerei)
+            {
+                if (aereo.IdAereo == idAereo)
+                {
+                    return aereo;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public static Flotta? GetFlottaByIdFlotta(long idFlotta)
+    {
+        return Flotte.FirstOrDefault(x => x.IdFLotta == idFlotta);
+    }
+
+    public static Aereo AddAereoAFlotta(long idFlotta, string codiceAereo,
+    string colore, long numeroPosti)
+    {
+        var aereoBl = Aereo.AereoFakeDBCreateFactory(IdAereoKey, codiceAereo,
+     colore, numeroPosti);
+        IdAereoKey++;
+
+        foreach (var flotta in Flotte)
+        {
+            if (flotta.IdFLotta == idFlotta)
+            {
+                flotta.Aerei.Add(aereoBl);
+                break;
+            }
+        }
+
+        return aereoBl;
+    }
+
 }
