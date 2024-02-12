@@ -16,7 +16,7 @@ public class AereoController : ControllerBase
     }
 
     [HttpGet()]
-    [ProducesResponseType(typeof(long), (int)HttpStatusCode.NotFound)]
+    [ProducesResponseType(typeof(string), (int)HttpStatusCode.NotFound)]
     [ProducesResponseType(typeof(AereoApi), (int)HttpStatusCode.OK)]
     public async Task<IActionResult> Get(long idAereo)
     {
@@ -24,7 +24,7 @@ public class AereoController : ControllerBase
         var aereo = FakeDatabase.GetAereoDaIdAereo(idAereo);
         if (aereo == null)
         {
-            return NotFound();
+            return NotFound("Non ho trovato l'aereo");
         }
 
         // convertiamo nel modello del contratto
