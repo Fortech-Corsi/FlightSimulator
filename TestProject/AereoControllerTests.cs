@@ -80,5 +80,6 @@ public class AereoControllerTests{
         Assert.Equal(a.CodiceAereo, b.CodiceAereo);
         Assert.Equal(a.Colore, b.Colore);
         Assert.Equal(a.NumeroDiPosti, b.NumeroDiPosti);
+        
     }
 }
