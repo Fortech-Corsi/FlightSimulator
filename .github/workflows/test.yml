@@ -13,4 +13,4 @@ jobs:
                 dotnet-version: '8.x'
             - run: dotnet --version
             # - run: dotnet build ./src/flightManager.sln
-            - run: dotnet test ./src/FlightSimulator.sln
+            - run: dotnet test ./FlightSimulator.sln
