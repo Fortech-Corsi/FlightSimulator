@@ -4,6 +4,7 @@ public static class FakeDatabase
 {
     public static List<Flotta> Flotte { get; set; }
     public static long IdAereoKey { get; set; }
+    public static long IdFlottaKey { get; set; }
 
     static FakeDatabase()
     {
@@ -24,6 +25,7 @@ public static class FakeDatabase
         Flotte = new List<Flotta>() { f1, f2, f3 };
 
         IdAereoKey = 10;
+        IdFlottaKey = 10010;
     }
 
     public static Aereo? GetAereoDaIdAereo(long idAereo)
@@ -90,11 +92,24 @@ public static class FakeDatabase
     public static Aereo? UpdateAereoByIdAereo(long idAereo, string codiceAereo, string colore, long numeroDiPosti)
     {
         var aereo = GetAereoDaIdAereo(idAereo);
-        if(aereo != null){
-             aereo.UpdateInformazioniAereo(codiceAereo, colore, numeroDiPosti);
+        if (aereo != null)
+        {
+            aereo.UpdateInformazioniAereo(codiceAereo, colore, numeroDiPosti);
         }
-       
+
         return aereo;
     }
 
+    public static List<Flotta> GetElencoFlotte()
+    {
+        return Flotte;
+    }
+
+    public static Flotta CreateFlotta()
+    {
+        var newFlotta = new Flotta(IdFlottaKey, new List<Aereo>());
+        IdFlottaKey++;
+        Flotte.Add(newFlotta);
+        return newFlotta;
+    }
 }
