@@ -1,6 +1,6 @@
 using CompanyService;
 
-public static class FakeDatabase
+public class FakeDatabase : IDatabaseService
 {
     public static List<Flotta> Flotte { get; set; }
     public static long IdAereoKey { get; set; }
@@ -28,7 +28,7 @@ public static class FakeDatabase
         IdFlottaKey = 10010;
     }
 
-    public static Aereo? GetAereoDaIdAereo(long idAereo)
+    public Aereo? GetAereoDaIdAereo(long idAereo)
     {
         foreach (var flotta in Flotte)
         {
@@ -44,12 +44,12 @@ public static class FakeDatabase
         return null;
     }
 
-    public static Flotta? GetFlottaByIdFlotta(long idFlotta)
+    public Flotta? GetFlottaByIdFlotta(long idFlotta)
     {
         return Flotte.FirstOrDefault(x => x.IdFLotta == idFlotta);
     }
 
-    public static Aereo AddAereoAFlotta(long idFlotta, string codiceAereo,
+    public Aereo AddAereoAFlotta(long idFlotta, string codiceAereo,
     string colore, long numeroPosti)
     {
         var aereoBl = Aereo.AereoFakeDBCreateFactory(IdAereoKey, codiceAereo,
@@ -68,7 +68,7 @@ public static class FakeDatabase
         return aereoBl;
     }
 
-    public static void DeleteAereoDaIdAereo(long idAereo)
+    public void DeleteAereoDaIdAereo(long idAereo)
     {
         Flotta flottaSelezionata = null;
         Aereo aereoSelezionato = null;
@@ -89,7 +89,7 @@ public static class FakeDatabase
         flottaSelezionata.Aerei.Remove(aereoSelezionato);
     }
 
-    public static Aereo? UpdateAereoByIdAereo(long idAereo, string codiceAereo, string colore, long numeroDiPosti)
+    public Aereo? UpdateAereoByIdAereo(long idAereo, string codiceAereo, string colore, long numeroDiPosti)
     {
         var aereo = GetAereoDaIdAereo(idAereo);
         if (aereo != null)
@@ -100,12 +100,12 @@ public static class FakeDatabase
         return aereo;
     }
 
-    public static List<Flotta> GetElencoFlotte()
+    public List<Flotta> GetElencoFlotte()
     {
         return Flotte;
     }
 
-    public static Flotta CreateFlotta()
+    public Flotta CreateFlotta()
     {
         var newFlotta = new Flotta(IdFlottaKey, new List<Aereo>());
         IdFlottaKey++;

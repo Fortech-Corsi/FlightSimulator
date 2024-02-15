@@ -11,8 +11,11 @@ namespace AirRouteAdministrator.API;
 [Route("api/v{version:apiVersion}/flotta")]
 public class FlottaController : ControllerBase
 {
-    public FlottaController()
+     private IDatabaseService _databaseService;
+
+    public FlottaController(IDatabaseService databaseService)
     {
+        _databaseService = databaseService;
     }
 
     [HttpGet()]
@@ -21,7 +24,7 @@ public class FlottaController : ControllerBase
     public async Task<IActionResult> Get(long idFlotta)
     {
         // Recupero le informazioni dal db     
-        var flotta = FakeDatabase.GetFlottaByIdFlotta(idFlotta);
+        var flotta = _databaseService.GetFlottaByIdFlotta(idFlotta);
         if (flotta == null)
         {
             return NotFound("Non ho trovato la flotta");
@@ -45,7 +48,7 @@ public class FlottaController : ControllerBase
     public async Task<IActionResult> GetElencoFlotte()
     {
         // Recupero le informazioni dal db     
-        var flotte = FakeDatabase.GetElencoFlotte();
+        var flotte = _databaseService.GetElencoFlotte();
         List<FlottaApi> flotteApi = new List<FlottaApi>();
         
         foreach (var flotta in flotte)        
@@ -69,7 +72,7 @@ public class FlottaController : ControllerBase
     public async Task<IActionResult> Post(CreateFlottaRequest request)
     {       
         // Inserimento nel database
-        var flotta = FakeDatabase.CreateFlotta();
+        var flotta = _databaseService.CreateFlotta();
 
         List<AereoApi> aerei = new List<AereoApi>();
         foreach (var aereo in flotta.Aerei)

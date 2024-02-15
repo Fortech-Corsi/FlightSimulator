@@ -21,7 +21,7 @@ public class Aereo
         return new Aereo(0, codiceAereo, colore, numeroDiPosti);
     }
 
-     public static Aereo AereoFakeDBCreateFactory(long idAereo, string codiceAereo, string colore, long numeroDiPosti){
+    public static Aereo AereoFakeDBCreateFactory(long idAereo, string codiceAereo, string colore, long numeroDiPosti){
         return new Aereo(idAereo, codiceAereo, colore, numeroDiPosti);
     }
 

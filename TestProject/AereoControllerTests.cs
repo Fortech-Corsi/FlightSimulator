@@ -2,6 +2,7 @@ using System.Net;
 using AirRouteAdministrator.API;
 using CompanyService;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
 
 namespace TestProject;
 
@@ -11,7 +12,9 @@ public class AereoControllerTests{
     public async void GetAereo_RecuperoUnAereo_RitornoUnAereo(){
         
         // ARRANGE
-        var _aereoController = new AereoController();
+        var database = new Mock<IDatabaseService>();
+        database.Setup(x => x.GetAereoDaIdAereo(It.IsAny<long>())).Returns(new Aereo(1, "Codice", "Colore", 50));
+        var _aereoController = new AereoController(database.Object);
         long idAereo = 1;
 
         // ACT
@@ -21,27 +24,16 @@ public class AereoControllerTests{
         Assert.NotNull(result);
         Assert.Equal((int)HttpStatusCode.OK, result.StatusCode);
     }
-
-    // [Fact]  
-    // public async void GetAereo_RecuperoUnAereo_RitornoNotFound(){
-        
-    //     // ARRANGE
-    //     var _aereoController = new AereoController();
-    //     long idAereo = 10;
-
-    //     // ACT
-    //     var result = await _aereoController.Get(idAereo) as ObjectResult;
-
-    //     // ASSERT
-    //     Assert.NotNull(result);
-    //     Assert.Equal((int)HttpStatusCode.NotFound, result.StatusCode);
-    // }
-
+ 
     [Fact]  
     public async void PostAereo_CreoUnAereo_AereoCreato(){
         
         // ARRANGE
-        var _aereoController = new AereoController();
+        var database = new Mock<IDatabaseService>();
+        database.Setup(x => x.GetFlottaByIdFlotta(It.IsAny<long>())).Returns(new Flotta(1,new List<Aereo>()));
+        database.Setup(x => x.AddAereoAFlotta(It.IsAny<long>(), It.IsAny<string>(),It.IsAny<string>(),It.IsAny<long>())).Returns(new Aereo(1, "MONTI", "ASADADADA", 100));
+
+        var _aereoController = new AereoController(database.Object);
         CreateAereoRequest createAereoRequest = new CreateAereoRequest(10000,
         "MONTI", "ASADADADA", 100);
 
@@ -58,7 +50,12 @@ public class AereoControllerTests{
     public async void PostAereo_CreoUnAereo_AereoTrovatoEVerificato(){
         
         // ARRANGE
-        var _aereoController = new AereoController();
+         var database = new Mock<IDatabaseService>();
+        database.Setup(x => x.GetAereoDaIdAereo(It.IsAny<long>())).Returns(new Aereo(1, "MONTI", "ASADADADA", 100));
+         database.Setup(x => x.GetFlottaByIdFlotta(It.IsAny<long>())).Returns(new Flotta(1,new List<Aereo>()));
+        database.Setup(x => x.AddAereoAFlotta(It.IsAny<long>(), It.IsAny<string>(),It.IsAny<string>(),It.IsAny<long>())).Returns(new Aereo(1, "MONTI", "ASADADADA", 100));
+        
+        var _aereoController = new AereoController(database.Object);
         CreateAereoRequest createAereoRequest = new CreateAereoRequest(10000,
         "MONTI", "ASADADADA", 100);
 

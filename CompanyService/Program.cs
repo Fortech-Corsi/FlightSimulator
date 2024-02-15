@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using CompanyService.Configs;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using CompanyService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,12 @@ builder.Services.AddControllers()
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
+
+// builder.Services.AddDbContext<FlightSimulatorDBContext>(
+//     options => options.UseSqlServer("name=ConnectionStrings:FlightSimulatorDB")
+//     .EnableDetailedErrors()
+//     .EnableSensitiveDataLogging()
+// );
 
 // Versioning Swagger
 builder.Services.AddApiVersioning(options =>
@@ -33,6 +40,9 @@ builder.Services.AddSwaggerGen(
         options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
     }
 );
+
+// Registro il database
+builder.Services.AddScoped<IDatabaseService, FakeDatabase>();
 
 var app = builder.Build();
 
