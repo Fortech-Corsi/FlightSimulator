@@ -4,7 +4,6 @@ public interface IDatabaseService
 {
     Aereo? GetAereoDaIdAereo(long idAereo);
 
-
     Flotta? GetFlottaByIdFlotta(long idFlotta);
 
     Aereo AddAereoAFlotta(long idFlotta, string codiceAereo,
@@ -12,13 +11,9 @@ public interface IDatabaseService
 
     void DeleteAereoDaIdAereo(long idAereo);
 
-
     Aereo? UpdateAereoByIdAereo(long idAereo, string codiceAereo, string colore, long numeroDiPosti);
-
 
     List<Flotta> GetElencoFlotte();
 
-
     Flotta CreateFlotta();
-
 }

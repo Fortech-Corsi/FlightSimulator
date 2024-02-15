@@ -33,12 +33,12 @@ public class FlottaController : ControllerBase
         List<AereoApi> aerei = new List<AereoApi>();
         foreach (var aereo in flotta.Aerei)
         {
-            var a = new AereoApi(aereo.IdAereo, aereo.CodiceAereo, aereo.Colore, aereo.NumeroDiPosti);
+            var a = new AereoApi(aereo.AereoId, aereo.CodiceAereo, aereo.Colore, aereo.NumeroDiPosti);
             aerei.Add(a);
         }
 
         // convertiamo nel modello del contratto
-        var result = FlottaApi.FlottaApiFactory(flotta.IdFLotta, aerei);
+        var result = FlottaApi.FlottaApiFactory(flotta.FlottaId, aerei);
         return Ok(result);
     }
 
@@ -56,11 +56,11 @@ public class FlottaController : ControllerBase
             List<AereoApi> aerei = new List<AereoApi>();
             foreach (var aereo in flotta.Aerei)
             {
-                var a = new AereoApi(aereo.IdAereo, aereo.CodiceAereo, aereo.Colore, aereo.NumeroDiPosti);
+                var a = new AereoApi(aereo.AereoId, aereo.CodiceAereo, aereo.Colore, aereo.NumeroDiPosti);
                 aerei.Add(a);
             }
 
-            flotteApi.Add(FlottaApi.FlottaApiFactory(flotta.IdFLotta, aerei));
+            flotteApi.Add(FlottaApi.FlottaApiFactory(flotta.FlottaId, aerei));
         }
         return Ok(flotteApi);
     }
@@ -77,12 +77,12 @@ public class FlottaController : ControllerBase
         List<AereoApi> aerei = new List<AereoApi>();
         foreach (var aereo in flotta.Aerei)
         {
-            var a = new AereoApi(aereo.IdAereo, aereo.CodiceAereo, aereo.Colore, aereo.NumeroDiPosti);
+            var a = new AereoApi(aereo.AereoId, aereo.CodiceAereo, aereo.Colore, aereo.NumeroDiPosti);
             aerei.Add(a);
         }
 
         // Converto il modello di bl in quello api
-        var aereoApi = new FlottaApi(flotta.IdFLotta, aerei);
+        var aereoApi = new FlottaApi(flotta.FlottaId, aerei);
 
         // Restituisco il modello api
         return Ok(aereoApi);

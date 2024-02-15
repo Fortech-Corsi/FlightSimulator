@@ -13,7 +13,7 @@ public class AereoControllerTests{
         
         // ARRANGE
         var database = new Mock<IDatabaseService>();
-        database.Setup(x => x.GetAereoDaIdAereo(It.IsAny<long>())).Returns(new Aereo(1, "Codice", "Colore", 50));
+        database.Setup(x => x.GetAereoDaIdAereo(It.IsAny<long>())).Returns(new Aereo(1, 10000, "Codice", "Colore", 50));
         var _aereoController = new AereoController(database.Object);
         long idAereo = 1;
 
@@ -31,7 +31,7 @@ public class AereoControllerTests{
         // ARRANGE
         var database = new Mock<IDatabaseService>();
         database.Setup(x => x.GetFlottaByIdFlotta(It.IsAny<long>())).Returns(new Flotta(1,new List<Aereo>()));
-        database.Setup(x => x.AddAereoAFlotta(It.IsAny<long>(), It.IsAny<string>(),It.IsAny<string>(),It.IsAny<long>())).Returns(new Aereo(1, "MONTI", "ASADADADA", 100));
+        database.Setup(x => x.AddAereoAFlotta(It.IsAny<long>(), It.IsAny<string>(),It.IsAny<string>(),It.IsAny<long>())).Returns(new Aereo(1,10000, "MONTI", "ASADADADA", 100));
 
         var _aereoController = new AereoController(database.Object);
         CreateAereoRequest createAereoRequest = new CreateAereoRequest(10000,
@@ -51,9 +51,9 @@ public class AereoControllerTests{
         
         // ARRANGE
          var database = new Mock<IDatabaseService>();
-        database.Setup(x => x.GetAereoDaIdAereo(It.IsAny<long>())).Returns(new Aereo(1, "MONTI", "ASADADADA", 100));
+        database.Setup(x => x.GetAereoDaIdAereo(It.IsAny<long>())).Returns(new Aereo(1, 10000,"MONTI", "ASADADADA", 100));
          database.Setup(x => x.GetFlottaByIdFlotta(It.IsAny<long>())).Returns(new Flotta(1,new List<Aereo>()));
-        database.Setup(x => x.AddAereoAFlotta(It.IsAny<long>(), It.IsAny<string>(),It.IsAny<string>(),It.IsAny<long>())).Returns(new Aereo(1, "MONTI", "ASADADADA", 100));
+        database.Setup(x => x.AddAereoAFlotta(It.IsAny<long>(), It.IsAny<string>(),It.IsAny<string>(),It.IsAny<long>())).Returns(new Aereo(1, 10000,"MONTI", "ASADADADA", 100));
         
         var _aereoController = new AereoController(database.Object);
         CreateAereoRequest createAereoRequest = new CreateAereoRequest(10000,

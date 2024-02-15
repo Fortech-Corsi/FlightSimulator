@@ -41,7 +41,7 @@ builder.Services.AddSwaggerGen(
     }
 );
 
-// Registro il database
+// Registro il database service
 builder.Services.AddScoped<IDatabaseService, FakeDatabase>();
 
 var app = builder.Build();

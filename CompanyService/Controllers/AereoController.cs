@@ -31,7 +31,7 @@ public class AereoController : ControllerBase
         }
 
         // convertiamo nel modello del contratto
-        var result = new AereoApi(aereo.IdAereo, aereo.CodiceAereo,
+        var result = new AereoApi(aereo.AereoId, aereo.CodiceAereo,
         aereo.Colore, aereo.NumeroDiPosti);
 
         return Ok(result);
@@ -54,7 +54,7 @@ public class AereoController : ControllerBase
         var aereoBl = _databaseService.AddAereoAFlotta(request.IdFLotta, request.CodiceAereo, request.Colore, request.NumeroDiPosti);
 
         // Converto il modello di bl in quello api
-        var aereoApi = new AereoApi(aereoBl.IdAereo, aereoBl.CodiceAereo, aereoBl.Colore, aereoBl.NumeroDiPosti);
+        var aereoApi = new AereoApi(aereoBl.AereoId, aereoBl.CodiceAereo, aereoBl.Colore, aereoBl.NumeroDiPosti);
 
         // Restituisco il modello api
         return Ok(aereoApi);
@@ -90,7 +90,7 @@ public class AereoController : ControllerBase
         var aereoBl = _databaseService.UpdateAereoByIdAereo(request.IdAereo, request.CodiceAereo, request.Colore, request.NumeroDiPosti);
 
          // Converto il modello di bl in quello api
-        var aereoApi = new AereoApi(aereoBl.IdAereo, aereoBl.CodiceAereo, aereoBl.Colore, aereoBl.NumeroDiPosti);
+        var aereoApi = new AereoApi(aereoBl.AereoId, aereoBl.CodiceAereo, aereoBl.Colore, aereoBl.NumeroDiPosti);
 
         // Restituisco il modello api
         return Ok(aereoApi);
