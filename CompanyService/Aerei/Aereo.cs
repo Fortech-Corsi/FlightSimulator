@@ -10,10 +10,17 @@ public class Aereo
 
     public long FlottaId { get; set; }
 
-    public Aereo(){
-        
-    }
+   
     
+    
+    public Aereo(long flottaId, string codiceAereo, string colore, long numeroDiPosti)
+    {
+        FlottaId = flottaId;
+        CodiceAereo = codiceAereo;
+        Colore = colore;
+        NumeroDiPosti = numeroDiPosti;
+    }
+
     public Aereo(long aereoId, long flottaId, string codiceAereo, string colore, long numeroDiPosti)
     {
         AereoId = aereoId;

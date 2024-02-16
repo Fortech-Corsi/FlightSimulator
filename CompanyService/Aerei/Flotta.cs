@@ -5,8 +5,7 @@ namespace CompanyService;
 public class Flotta
 {
     public long FlottaId { get; set; }
-    // public virtual ICollection<AereoDB> Aerei { get; set; }
-    public List<Aereo> Aerei { get; set; }
+    public virtual ICollection<Aereo> Aerei { get; set; }
 
     public Flotta()
     {

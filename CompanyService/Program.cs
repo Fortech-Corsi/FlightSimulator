@@ -52,6 +52,21 @@ var db = scope.ServiceProvider.GetRequiredService<FlightSimulatorDBContext>();
 db.Database.EnsureDeleted();
 db.Database.Migrate();
 
+// simulazione seed db
+
+
+Flotta f1 = new Flotta();
+db.Flotte.Add(f1);
+Flotta f2 = new Flotta();
+db.Flotte.Add(f2);
+db.SaveChanges();
+
+Aereo a1 = new Aereo(f1.FlottaId,"AAAABBB", "Verse", 100);
+db.Aerei.Add(a1); 
+Aereo a2 = new Aereo(f2.FlottaId,"CCCDDD", "Rosso", 80);
+db.Aerei.Add(a2); 
+db.SaveChanges();
+
 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 app.UseSwagger(options => options.PreSerializeFilters.Add((swagger, req) => swagger.Servers = new List<OpenApiServer>() { new OpenApiServer() { Url = $"http://{req.Host}" } }));
 app.UseSwaggerUI(options =>
