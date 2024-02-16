@@ -28,7 +28,7 @@ public class FakeDatabase : IDatabaseService
         IdFlottaKey = 10010;
     }
 
-    public Aereo? GetAereoDaIdAereo(long idAereo)
+    public Task<Aereo?> GetAereoDaIdAereo(long idAereo)
     {
         foreach (var flotta in Flotte)
         {
@@ -36,20 +36,20 @@ public class FakeDatabase : IDatabaseService
             {
                 if (aereo.AereoId == idAereo)
                 {
-                    return aereo;
+                    return Task.FromResult<Aereo?>(aereo);
                 }
             }
         }
 
-        return null;
+        return Task.FromResult<Aereo?>(null);
     }
 
-    public Flotta? GetFlottaByIdFlotta(long idFlotta)
+    public async Task<Flotta?> GetFlottaByIdFlotta(long idFlotta)
     {
         return Flotte.FirstOrDefault(x => x.FlottaId == idFlotta);
     }
 
-    public Aereo AddAereoAFlotta(long idFlotta, string codiceAereo,
+    public async Task<Aereo> AddAereoAFlotta(long idFlotta, string codiceAereo,
     string colore, long numeroPosti)
     {
         var aereoBl = Aereo.AereoFakeDBCreateFactory(IdAereoKey,idFlotta, codiceAereo,
@@ -68,7 +68,7 @@ public class FakeDatabase : IDatabaseService
         return aereoBl;
     }
 
-    public void DeleteAereoDaIdAereo(long idAereo)
+    public async Task DeleteAereoDaIdAereo(long idAereo)
     {
         Flotta flottaSelezionata = null;
         Aereo aereoSelezionato = null;
@@ -89,9 +89,9 @@ public class FakeDatabase : IDatabaseService
         flottaSelezionata.Aerei.Remove(aereoSelezionato);
     }
 
-    public Aereo? UpdateAereoByIdAereo(long idAereo, string codiceAereo, string colore, long numeroDiPosti)
+    public async Task<Aereo?> UpdateAereoByIdAereo(long idAereo, string codiceAereo, string colore, long numeroDiPosti)
     {
-        var aereo = GetAereoDaIdAereo(idAereo);
+        var aereo = await GetAereoDaIdAereo(idAereo);
         if (aereo != null)
         {
             aereo.UpdateInformazioniAereo(codiceAereo, colore, numeroDiPosti);
@@ -100,12 +100,12 @@ public class FakeDatabase : IDatabaseService
         return aereo;
     }
 
-    public List<Flotta> GetElencoFlotte()
+    public async Task<List<Flotta>> GetElencoFlotte()
     {
         return Flotte;
     }
 
-    public Flotta CreateFlotta()
+    public async Task<Flotta> CreateFlotta()
     {
         var newFlotta = new Flotta(IdFlottaKey, new List<Aereo>());
         IdFlottaKey++;

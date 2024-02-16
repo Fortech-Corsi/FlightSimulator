@@ -24,7 +24,7 @@ public class FlottaController : ControllerBase
     public async Task<IActionResult> Get(long idFlotta)
     {
         // Recupero le informazioni dal db     
-        var flotta = _databaseService.GetFlottaByIdFlotta(idFlotta);
+        var flotta = await _databaseService.GetFlottaByIdFlotta(idFlotta);
         if (flotta == null)
         {
             return NotFound("Non ho trovato la flotta");
@@ -48,7 +48,7 @@ public class FlottaController : ControllerBase
     public async Task<IActionResult> GetElencoFlotte()
     {
         // Recupero le informazioni dal db     
-        var flotte = _databaseService.GetElencoFlotte();
+        var flotte = await _databaseService.GetElencoFlotte();
         List<FlottaApi> flotteApi = new List<FlottaApi>();
         
         foreach (var flotta in flotte)        
@@ -72,7 +72,7 @@ public class FlottaController : ControllerBase
     public async Task<IActionResult> Post(CreateFlottaRequest request)
     {       
         // Inserimento nel database
-        var flotta = _databaseService.CreateFlotta();
+        var flotta = await _databaseService.CreateFlotta();
 
         List<AereoApi> aerei = new List<AereoApi>();
         foreach (var aereo in flotta.Aerei)

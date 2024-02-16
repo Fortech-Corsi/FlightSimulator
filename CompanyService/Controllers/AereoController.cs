@@ -24,7 +24,7 @@ public class AereoController : ControllerBase
     public async Task<IActionResult> Get(long idAereo)
     {
         // Recupero le informazioni dal db     
-        var aereo = _databaseService.GetAereoDaIdAereo(idAereo);
+        var aereo = await _databaseService.GetAereoDaIdAereo(idAereo);
         if (aereo == null)
         {
             return NotFound("Non ho trovato l'aereo");
@@ -51,7 +51,7 @@ public class AereoController : ControllerBase
         }
 
         // Inserimento nel database
-        var aereoBl = _databaseService.AddAereoAFlotta(request.IdFLotta, request.CodiceAereo, request.Colore, request.NumeroDiPosti);
+        var aereoBl = await _databaseService.AddAereoAFlotta(request.IdFLotta, request.CodiceAereo, request.Colore, request.NumeroDiPosti);
 
         // Converto il modello di bl in quello api
         var aereoApi = new AereoApi(aereoBl.AereoId, aereoBl.CodiceAereo, aereoBl.Colore, aereoBl.NumeroDiPosti);
@@ -66,12 +66,12 @@ public class AereoController : ControllerBase
     public async Task<IActionResult> Delete(long idAereo)
     {
          // Recupero le informazioni dal db     
-        var aereo = _databaseService.GetAereoDaIdAereo(idAereo);
+        var aereo = await _databaseService.GetAereoDaIdAereo(idAereo);
         if (aereo == null)
         {
             return NotFound();
         }
-        _databaseService.DeleteAereoDaIdAereo(idAereo);
+        await _databaseService.DeleteAereoDaIdAereo(idAereo);
         return Ok();
     }
 
@@ -81,13 +81,13 @@ public class AereoController : ControllerBase
     public async Task<IActionResult> Put(UpdateAereoRequest request)
     {
          // Recupero le informazioni dal db     
-        var aereo = _databaseService.GetAereoDaIdAereo(request.IdAereo);
+        var aereo = await _databaseService.GetAereoDaIdAereo(request.IdAereo);
         if (aereo == null)
         {
             return NotFound();
         }
 
-        var aereoBl = _databaseService.UpdateAereoByIdAereo(request.IdAereo, request.CodiceAereo, request.Colore, request.NumeroDiPosti);
+        var aereoBl = await _databaseService.UpdateAereoByIdAereo(request.IdAereo, request.CodiceAereo, request.Colore, request.NumeroDiPosti);
 
          // Converto il modello di bl in quello api
         var aereoApi = new AereoApi(aereoBl.AereoId, aereoBl.CodiceAereo, aereoBl.Colore, aereoBl.NumeroDiPosti);
