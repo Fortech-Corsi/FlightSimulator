@@ -9,9 +9,6 @@ public class Aereo
     public long NumeroDiPosti { get; set; }    
 
     public long FlottaId { get; set; }
-
-   
-    
     
     public Aereo(long flottaId, string codiceAereo, string? colore, long numeroDiPosti)
     {
@@ -28,11 +25,7 @@ public class Aereo
         CodiceAereo = codiceAereo;
         Colore = colore;
         NumeroDiPosti = numeroDiPosti;
-    }
-  
-    public static Aereo AereoFakeDBCreateFactory(long idAereo, long flottaId,  string codiceAereo, string colore, long numeroDiPosti){
-        return new Aereo(idAereo,flottaId,  codiceAereo, colore, numeroDiPosti);
-    }
+    }  
 
     public void UpdateInformazioniAereo(string codiceAereo, string colore, long numeroDiPosti)
     {

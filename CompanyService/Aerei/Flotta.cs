@@ -10,12 +10,7 @@ public class Flotta
     public Flotta()
     {
 
-    }
-
-    public Flotta(long idFLotta)
-    {
-        FlottaId = idFLotta;
-    }
+    } 
 
     public Flotta(long idFLotta, List<Aereo> aerei)
     {
