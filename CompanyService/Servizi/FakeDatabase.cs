@@ -1,6 +1,6 @@
 using CompanyService;
 
-public class FakeDatabase : IDatabaseService
+public class FakeDatabase 
 {
     public static List<Flotta> Flotte { get; set; }
     public static long IdAereoKey { get; set; }
