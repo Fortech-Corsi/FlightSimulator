@@ -43,13 +43,13 @@ builder.Services.AddSwaggerGen(
 );
 
 // Registro il database service
-builder.Services.AddScoped<IDatabaseService, FakeDatabase>();
+builder.Services.AddScoped<IDatabaseService, EFDatabase>();
 
 var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
 var db = scope.ServiceProvider.GetRequiredService<FlightSimulatorDBContext>();
-// db.Database.EnsureDeleted();
+db.Database.EnsureDeleted();
 db.Database.Migrate();
 
 // simulazione seed db
@@ -61,10 +61,12 @@ Flotta f2 = new Flotta();
 db.Flotte.Add(f2);
 db.SaveChanges();
 
-Aereo a1 = new Aereo(f1.FlottaId,"AAAABBB", "Verse", 100);
+Aereo a1 = new Aereo(f1.FlottaId,"AAAABBB", "Verde", 100);
 db.Aerei.Add(a1); 
 Aereo a2 = new Aereo(f2.FlottaId,"CCCDDD", "Giallo", 80);
 db.Aerei.Add(a2); 
+Aereo a3 = new Aereo(f2.FlottaId,"EEEFFF", "Rosa", 80);
+db.Aerei.Add(a3); 
 db.SaveChanges();
 
 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();

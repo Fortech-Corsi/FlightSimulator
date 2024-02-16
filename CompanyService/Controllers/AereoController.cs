@@ -44,7 +44,7 @@ public class AereoController : ControllerBase
     public async Task<IActionResult> Post(CreateAereoRequest request)
     {
         // Verifichiamo l'esistenza della flotta
-        var flotta = _databaseService.GetFlottaByIdFlotta(request.IdFLotta);
+        var flotta = await _databaseService.GetFlottaByIdFlotta(request.IdFLotta);
         if (flotta == null)
         {
             return BadRequest("No ho trovato la flotta");

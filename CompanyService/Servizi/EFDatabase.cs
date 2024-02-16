@@ -1,40 +1,73 @@
 ﻿
+using Microsoft.EntityFrameworkCore;
+
 namespace CompanyService;
 
 public class EFDatabase : IDatabaseService
 {
-    public Task<Aereo> AddAereoAFlotta(long idFlotta, string codiceAereo, string colore, long numeroPosti)
+    private FlightSimulatorDBContext _context;
+    public EFDatabase(FlightSimulatorDBContext context)
     {
-        throw new NotImplementedException();
+        _context = context;
     }
 
-    public Task<Flotta> CreateFlotta()
+    public async Task<Aereo> AddAereoAFlotta(long idFlotta, string codiceAereo, string colore, long numeroPosti)
     {
-        throw new NotImplementedException();
+        Aereo a = new Aereo(idFlotta, codiceAereo, colore, numeroPosti);
+        await _context.Aerei.AddAsync(a);
+        await _context.SaveChangesAsync();
+        return a;
     }
 
-    public Task DeleteAereoDaIdAereo(long idAereo)
+    public async Task<Flotta> CreateFlotta()
     {
-        throw new NotImplementedException();
+        Flotta f = new Flotta();
+        await _context.Flotte.AddAsync(f);
+        await _context.SaveChangesAsync();
+
+        return await GetFlottaByIdFlotta(f.FlottaId);
     }
 
-    public Task<Aereo?> GetAereoDaIdAereo(long idAereo)
+    public async Task DeleteAereoDaIdAereo(long idAereo)
     {
-        throw new NotImplementedException();
+        var aereo = await GetAereoDaIdAereo(idAereo);
+        if (aereo != null)
+        {
+            _context.Aerei.Remove(aereo);
+            await _context.SaveChangesAsync();
+        }
     }
 
-    public Task<List<Flotta>> GetElencoFlotte()
+    public async Task<Aereo?> GetAereoDaIdAereo(long idAereo)
     {
-        throw new NotImplementedException();
+        return await _context.Aerei.FirstOrDefaultAsync(
+            x => x.AereoId == idAereo
+        );
     }
 
-    public Task<Flotta?> GetFlottaByIdFlotta(long idFlotta)
+    public async Task<List<Flotta>> GetElencoFlotte()
     {
-        throw new NotImplementedException();
+        return await _context.Flotte
+        .Include(b => b.Aerei).ToListAsync();
     }
 
-    public Task<Aereo?> UpdateAereoByIdAereo(long idAereo, string codiceAereo, string colore, long numeroDiPosti)
+    public async Task<Flotta?> GetFlottaByIdFlotta(long idFlotta)
     {
-        throw new NotImplementedException();
+        return await _context.Flotte.Where(
+           x => x.FlottaId == idFlotta
+       )
+       .Include(b => b.Aerei)
+       .FirstOrDefaultAsync();
+    }
+
+    public async Task<Aereo?> UpdateAereoByIdAereo(long idAereo, string codiceAereo, string colore, long numeroDiPosti)
+    {
+        var aereo = await GetAereoDaIdAereo(idAereo);
+        if (aereo != null)
+        {
+            aereo.UpdateInformazioniAereo(codiceAereo, colore, numeroDiPosti);
+            await _context.SaveChangesAsync();
+        }           
+        return aereo;
     }
 }
