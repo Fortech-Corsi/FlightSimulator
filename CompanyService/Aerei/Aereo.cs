@@ -13,7 +13,7 @@ public class Aereo
    
     
     
-    public Aereo(long flottaId, string codiceAereo, string colore, long numeroDiPosti)
+    public Aereo(long flottaId, string codiceAereo, string? colore, long numeroDiPosti)
     {
         FlottaId = flottaId;
         CodiceAereo = codiceAereo;

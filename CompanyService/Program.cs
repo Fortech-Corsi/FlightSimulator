@@ -49,7 +49,7 @@ var app = builder.Build();
 
 using var scope = app.Services.CreateScope();
 var db = scope.ServiceProvider.GetRequiredService<FlightSimulatorDBContext>();
-db.Database.EnsureDeleted();
+// db.Database.EnsureDeleted();
 db.Database.Migrate();
 
 // simulazione seed db
@@ -63,7 +63,7 @@ db.SaveChanges();
 
 Aereo a1 = new Aereo(f1.FlottaId,"AAAABBB", "Verse", 100);
 db.Aerei.Add(a1); 
-Aereo a2 = new Aereo(f2.FlottaId,"CCCDDD", "Rosso", 80);
+Aereo a2 = new Aereo(f2.FlottaId,"CCCDDD", "Giallo", 80);
 db.Aerei.Add(a2); 
 db.SaveChanges();
 
