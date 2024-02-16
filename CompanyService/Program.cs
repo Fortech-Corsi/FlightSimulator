@@ -4,6 +4,7 @@ using CompanyService.Configs;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using CompanyService;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,11 +15,11 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
-// builder.Services.AddDbContext<FlightSimulatorDBContext>(
-//     options => options.UseSqlServer("name=ConnectionStrings:FlightSimulatorDB")
-//     .EnableDetailedErrors()
-//     .EnableSensitiveDataLogging()
-// );
+builder.Services.AddDbContext<FlightSimulatorDBContext>(
+    options => options.UseSqlServer("name=ConnectionStrings:FlightSimulatorDB")
+    .EnableDetailedErrors()
+    .EnableSensitiveDataLogging()
+);
 
 // Versioning Swagger
 builder.Services.AddApiVersioning(options =>
@@ -45,6 +46,11 @@ builder.Services.AddSwaggerGen(
 builder.Services.AddScoped<IDatabaseService, FakeDatabase>();
 
 var app = builder.Build();
+
+using var scope = app.Services.CreateScope();
+var db = scope.ServiceProvider.GetRequiredService<FlightSimulatorDBContext>();
+db.Database.EnsureDeleted();
+db.Database.Migrate();
 
 var apiVersionDescriptionProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 app.UseSwagger(options => options.PreSerializeFilters.Add((swagger, req) => swagger.Servers = new List<OpenApiServer>() { new OpenApiServer() { Url = $"http://{req.Host}" } }));
