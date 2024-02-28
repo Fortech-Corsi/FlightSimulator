@@ -3,6 +3,7 @@ using CompanyService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CompanyService.Migrations
 {
     [DbContext(typeof(FlightSimulatorDBContext))]
-    partial class FlightSimulatorDBContextModelSnapshot : ModelSnapshot
+    [Migration("20240228094048_flotta aggiunto campo Nome")]
+    partial class flottaaggiuntocampoNome
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

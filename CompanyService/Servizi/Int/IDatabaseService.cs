@@ -15,5 +15,5 @@ public interface IDatabaseService
 
     Task<List<Flotta>> GetElencoFlotte();
 
-    Task<Flotta> CreateFlotta();
+    Task<Flotta> CreateFlotta(string nome);
 }
