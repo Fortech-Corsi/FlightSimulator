@@ -11,8 +11,11 @@ namespace AirRouteAdministrator.API;
 [Route("api/v{version:apiVersion}/aereo")]
 public class AereoController : ControllerBase
 {
-    public AereoController()
+    private IDatabaseService _databaseService;
+
+    public AereoController(IDatabaseService databaseService)
     {
+        _databaseService = databaseService;
     }
 
     [HttpGet()]
@@ -21,14 +24,14 @@ public class AereoController : ControllerBase
     public async Task<IActionResult> Get(long idAereo)
     {
         // Recupero le informazioni dal db     
-        var aereo = FakeDatabase.GetAereoDaIdAereo(idAereo);
+        var aereo = await _databaseService.GetAereoDaIdAereo(idAereo);
         if (aereo == null)
         {
             return NotFound("Non ho trovato l'aereo");
         }
 
         // convertiamo nel modello del contratto
-        var result = new AereoApi(aereo.IdAereo, aereo.CodiceAereo,
+        var result = new AereoApi(aereo.AereoId, aereo.CodiceAereo,
         aereo.Colore, aereo.NumeroDiPosti);
 
         return Ok(result);
@@ -41,17 +44,17 @@ public class AereoController : ControllerBase
     public async Task<IActionResult> Post(CreateAereoRequest request)
     {
         // Verifichiamo l'esistenza della flotta
-        var flotta = FakeDatabase.GetFlottaByIdFlotta(request.IdFLotta);
+        var flotta = await _databaseService.GetFlottaByIdFlotta(request.IdFLotta);
         if (flotta == null)
         {
             return BadRequest("No ho trovato la flotta");
         }
 
         // Inserimento nel database
-        var aereoBl = FakeDatabase.AddAereoAFlotta(request.IdFLotta, request.CodiceAereo, request.Colore, request.NumeroDiPosti);
+        var aereoBl = await _databaseService.AddAereoAFlotta(request.IdFLotta, request.CodiceAereo, request.Colore, request.NumeroDiPosti);
 
         // Converto il modello di bl in quello api
-        var aereoApi = new AereoApi(aereoBl.IdAereo, aereoBl.CodiceAereo, aereoBl.Colore, aereoBl.NumeroDiPosti);
+        var aereoApi = new AereoApi(aereoBl.AereoId, aereoBl.CodiceAereo, aereoBl.Colore, aereoBl.NumeroDiPosti);
 
         // Restituisco il modello api
         return Ok(aereoApi);
@@ -63,12 +66,12 @@ public class AereoController : ControllerBase
     public async Task<IActionResult> Delete(long idAereo)
     {
          // Recupero le informazioni dal db     
-        var aereo = FakeDatabase.GetAereoDaIdAereo(idAereo);
+        var aereo = await _databaseService.GetAereoDaIdAereo(idAereo);
         if (aereo == null)
         {
             return NotFound();
         }
-        FakeDatabase.DeleteAereoDaIdAereo(idAereo);
+        await _databaseService.DeleteAereoDaIdAereo(idAereo);
         return Ok();
     }
 
@@ -78,16 +81,16 @@ public class AereoController : ControllerBase
     public async Task<IActionResult> Put(UpdateAereoRequest request)
     {
          // Recupero le informazioni dal db     
-        var aereo = FakeDatabase.GetAereoDaIdAereo(request.IdAereo);
+        var aereo = await _databaseService.GetAereoDaIdAereo(request.IdAereo);
         if (aereo == null)
         {
             return NotFound();
         }
 
-        var aereoBl = FakeDatabase.UpdateAereoByIdAereo(request.IdAereo, request.CodiceAereo, request.Colore, request.NumeroDiPosti);
+        var aereoBl = await _databaseService.UpdateAereoByIdAereo(request.IdAereo, request.CodiceAereo, request.Colore, request.NumeroDiPosti);
 
          // Converto il modello di bl in quello api
-        var aereoApi = new AereoApi(aereoBl.IdAereo, aereoBl.CodiceAereo, aereoBl.Colore, aereoBl.NumeroDiPosti);
+        var aereoApi = new AereoApi(aereoBl.AereoId, aereoBl.CodiceAereo, aereoBl.Colore, aereoBl.NumeroDiPosti);
 
         // Restituisco il modello api
         return Ok(aereoApi);

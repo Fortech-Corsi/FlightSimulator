@@ -4,12 +4,17 @@ namespace CompanyService;
 
 public class Flotta
 {
-    public long IdFLotta { get; set; }
-    public List<Aereo> Aerei { get; set; }
+    public long FlottaId { get; set; }
+    public virtual ICollection<Aereo> Aerei { get; set; }
+
+    public Flotta()
+    {
+
+    } 
 
     public Flotta(long idFLotta, List<Aereo> aerei)
     {
-        IdFLotta = idFLotta;
+        FlottaId = idFLotta;
         Aerei = aerei;
     }
 
@@ -17,7 +22,7 @@ public class Flotta
     {
         foreach (var aereo in Aerei)
         {
-            if (aereo.IdAereo == idAereo)
+            if (aereo.AereoId == idAereo)
             {
                 return aereo;
             }
@@ -25,4 +30,5 @@ public class Flotta
 
         return null;
     }
+
 }
