@@ -19,9 +19,9 @@ public class EFDatabase : IDatabaseService
         return a;
     }
 
-    public async Task<Flotta> CreateFlotta()
+    public async Task<Flotta> CreateFlotta(string nome)
     {
-        Flotta f = new Flotta();
+        Flotta f = Flotta.FlottaFactory(nome);
         await _context.Flotte.AddAsync(f);
         await _context.SaveChangesAsync();
 

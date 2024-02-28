@@ -44,6 +44,7 @@ builder.Services.AddSwaggerGen(
 
 // Registro il database service
 builder.Services.AddScoped<IDatabaseService, EFDatabase>();
+builder.Services.AddScoped<IConversionService, ConversionService>();
 
 var app = builder.Build();
 
@@ -55,9 +56,9 @@ db.Database.Migrate();
 // simulazione seed db
 
 
-Flotta f1 = new Flotta();
+Flotta f1 = Flotta.FlottaFactory("Flotta 1");
 db.Flotte.Add(f1);
-Flotta f2 = new Flotta();
+Flotta f2 = Flotta.FlottaFactory("Flotta 2");
 db.Flotte.Add(f2);
 db.SaveChanges();
 
